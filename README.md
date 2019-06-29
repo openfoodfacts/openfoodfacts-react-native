@@ -6,7 +6,7 @@ Join [Open Food Fact slack](https://openfoodfacts.slack.com) if you'd like to co
 
 ## Contributors
 
-- [EthicAdvisor](www.ethicadvisor.org) team
+- [EthicAdvisor](https://www.ethicadvisor.org) team
 
 ## Doc
 
