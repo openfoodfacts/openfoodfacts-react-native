@@ -1,9 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, ScrollView } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    TextInput,
+    Alert,
+    ScrollView,
+    KeyboardAvoidingView
+} from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Icon } from 'react-native-elements';
 import { getProduct, uploadProductToOFF } from '../API/Api';
 import { getPicturePath, INGREDIENTS, NUTRITION, WHOLE } from './TakePictureScreen';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const FOOD = 'Food';
 
@@ -120,7 +131,7 @@ export default class AddProductScreen extends React.Component {
     _renderDescription() {
         const exampleCategory = this.props.navigation.getParam('category') === FOOD ? 'Plat cuisiné' : 'Corps';
         return (
-            <ScrollView>
+            <View>
                 {this._renderBrands()}
                 <TextInput
                     placeholder="Par exemple : Jardin Bio, Léa Nature"
@@ -149,7 +160,7 @@ export default class AddProductScreen extends React.Component {
                     onChangeText={textCategory => this.setState({ textCategory })}
                     value={this.state.textCategory}
                 />
-            </ScrollView>
+            </View>
         );
     }
 
@@ -275,7 +286,7 @@ export default class AddProductScreen extends React.Component {
         }
 
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <KeyboardAwareScrollView style={{ flex: 1 }} behavior="padding" enabled>
                 <Accordion
                     sections={sections}
                     activeSections={this.state.activeSections}
@@ -291,7 +302,7 @@ export default class AddProductScreen extends React.Component {
                 >
                     <Text style={{ color: 'white', fontSize: 18 }}>{this.state.status}</Text>
                 </TouchableOpacity>
-            </View>
+            </KeyboardAwareScrollView>
         );
     }
 }
