@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    Image,
-    TextInput,
-    Alert,
-    ScrollView,
-    KeyboardAvoidingView
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Icon } from 'react-native-elements';
 import { getProduct, uploadProductToOFF } from '../API/Api';
