@@ -1,4 +1,4 @@
-import { authHeaderOFF, getEditComment, userAgent } from '../../OFFAuth.js';
+import { userId, password, getEditComment, userAgent } from '../../OFFAuth.js';
 
 export async function getProduct(ean) {
     const url = `https://world.openfoodfacts.org/api/v0/product/${ean}.json`;
@@ -8,7 +8,6 @@ export async function getProduct(ean) {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
-                Authorization: authHeaderOFF,
                 'Content-Type': 'application/json',
                 UserAgent: userAgent
             }
@@ -28,20 +27,22 @@ export async function uploadProductToOFF(args) {
     const comment = await getEditComment();
     const url = `https://world.openfoodfacts.org/cgi/product_jqm2.pl?code=${args.ean}&product_name=${
         args.name
-    }&add_brands=${args.brand}&add_labels=${args.labels}&add_categories=${args.categories}&comment=${comment}`;
+    }&add_brands=${args.brand}&add_labels=${args.labels}&add_categories=${
+        args.categories
+    }&comment=${comment}&user_id=${userId}&password=${encodeURIComponent(password)}`;
 
     try {
-        await fetch(url, {
+        const response = await fetch(url, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
-                Authorization: authHeaderOFF,
                 'Content-Type': 'application/json',
                 UserAgent: userAgent
             }
         });
+        response.text().then(text => console.log('=> OFF response text:', text));
         if (args.wholePicture) {
-            await addPictureToProduct(args.ean, args.wholePicture, 'front', 'imgupload_front_en', 'front_img.jpg');
+            await addPictureToProduct(args.ean, args.wholePicture, 'front', 'imgupload_front', 'front_img.jpg');
         }
         if (args.ingredientsPicture) {
             await addPictureToProduct(
@@ -73,12 +74,13 @@ function addPictureToProduct(code, picture, fieldValue, imgUpload, imgTitle) {
     formData.append('code', code);
     formData.append('imagefield', fieldValue);
     formData.append(imgUpload, { uri: picture, type: 'image/jpg', name: imgTitle });
+    formData.append('user_id', userId);
+    formData.append('password', password);
 
     return fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            Authorization: authHeaderOFF,
             'Content-Type': 'multipart/form-data',
             UserAgent: userAgent
         },
