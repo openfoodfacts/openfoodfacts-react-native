@@ -276,7 +276,13 @@ export default class AddProductScreen extends React.Component {
         }
 
         return (
-            <KeyboardAwareScrollView style={{ flex: 1 }} behavior="padding" enabled>
+            <KeyboardAwareScrollView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+                contentContainerStyle={{ flexGrow: 1 }}
+                enableOnAndroid={true}
+            >
                 <Accordion
                     sections={sections}
                     activeSections={this.state.activeSections}
