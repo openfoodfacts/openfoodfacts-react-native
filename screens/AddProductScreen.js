@@ -5,12 +5,16 @@ import { Icon } from 'react-native-elements';
 import { getProduct, uploadProductToOFF } from '../API/Api';
 import { getPicturePath, INGREDIENTS, NUTRITION, WHOLE } from './TakePictureScreen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { logUserEventContributeOFF } from '../../helpers/Analytics';
 
 export const FOOD = 'Food';
 
+const ADD_PRODUCT = 'Ajouter le produit';
+const EDIT_PRODUCT = 'Enregistrer';
+
 export default class AddProductScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
-        title: `Editer ou ajouter un produit dans Open ${navigation.state.params.category} Facts`,
+        title: `Editer ou ajouter un produit`,
         headerStyle: {
             backgroundColor: '#38b3c5'
         },
@@ -30,7 +34,7 @@ export default class AddProductScreen extends React.Component {
             existingBrand: '',
             existingLabels: '',
             existingCategories: '',
-            status: 'Ajouter ce produit'
+            status: ADD_PRODUCT
         };
     }
 
@@ -40,12 +44,14 @@ export default class AddProductScreen extends React.Component {
             this.setState({ activeSections: [] });
         });
 
-        const offProduct = await getProduct(this.getEan());
+        const offProduct = await getProduct(this.getEan(), this.getCategory());
         if (offProduct !== null) {
-            Alert.alert(
-                'Edition',
-                `Le produit existait déjà dans Open Food Facts. Vous pouvez éditer les infos et ajouter de nouvelles photos.`
-            );
+            if (!this.isEditMode()) {
+                Alert.alert(
+                    'Edition',
+                    `Le produit n'était pas encore présent dans la base EthicAdvisor mais existait déjà dans Open Food Facts. Vous pouvez compléter les infos et ajouter de nouvelles photos.`
+                );
+            }
             const product = offProduct.product;
             this.setState({
                 existingName: product.product_name,
@@ -53,9 +59,17 @@ export default class AddProductScreen extends React.Component {
                 existingLabels: product.labels,
                 existingCategories: product.categories,
                 existingBrand: product.brands,
-                alreadyExist: true
+                alreadyExist: true,
+                status: EDIT_PRODUCT
             });
         }
+    }
+
+    _getStatus() {
+        if (this.state.alreadyExist) {
+            return EDIT_PRODUCT;
+        }
+        return ADD_PRODUCT;
     }
 
     _renderHeader = (section, index, isActive) => {
@@ -119,7 +133,7 @@ export default class AddProductScreen extends React.Component {
     }
 
     _renderDescription() {
-        const exampleCategory = this.props.navigation.getParam('category') === FOOD ? 'Plat cuisiné' : 'Corps';
+        const exampleCategory = this.getCategory() === FOOD ? 'Plat cuisiné' : 'Corps';
         return (
             <View>
                 {this._renderBrands()}
@@ -156,6 +170,10 @@ export default class AddProductScreen extends React.Component {
 
     getCategory() {
         return this.props.navigation.getParam('category');
+    }
+
+    isEditMode() {
+        return this.props.navigation.getParam('mode') === 'edit';
     }
 
     getEan() {
