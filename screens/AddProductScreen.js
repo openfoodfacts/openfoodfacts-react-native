@@ -215,7 +215,7 @@ export default class AddProductScreen extends React.Component {
         return true;
     }
 
-    _validateProduct() {
+    async _validateProduct() {
         if (!this._verifyProduct()) {
             Alert.alert(
                 'Champ(s) vide(s) détecté(s)',
@@ -232,20 +232,22 @@ export default class AddProductScreen extends React.Component {
             wholePicture: this.getPicturePathParam(WHOLE),
             ingredientsPicture: this.getPicturePathParam(INGREDIENTS),
             labels: this.state.textLabel,
-            categories: this.state.textCategory
+            categories: this.state.textCategory,
+            category: this.getCategory()
         };
         if (this.getCategory() === FOOD) {
             args.nutritionPicture = this.getPicturePathParam(NUTRITION);
         }
-        uploadProductToOFF(args)
-            .then(() => {
-                Alert.alert('Produit ajouté', `Ce produit a été ajouté avec succès, merci pour votre contribution !`);
-                this.props.navigation.navigate('Scan');
-            })
-            .catch(error => {
-                Alert.alert('Un problème est survenu', `Ce produit n'a pas pu être ajouté, merci de réessayer.`);
-                this.setState({ addValidate: 'Ajouter ce produit' });
-            });
+
+        try {
+            await uploadProductToOFF(args);
+            Alert.alert('Produit ajouté', `Ce produit a été ajouté avec succès, merci pour votre contribution !`);
+            await logUserEventContributeOFF(this.getEan(), this.isEditMode() ? 'edit' : 'add');
+            this.props.navigation.navigate('Scan');
+        } catch (error) {
+            Alert.alert('Un problème est survenu', `Ce produit n'a pas pu être ajouté, merci de réessayer.`);
+            this.setState({ status: this._getStatus() });
+        }
     }
 
     render() {

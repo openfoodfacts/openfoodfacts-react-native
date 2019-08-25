@@ -1,7 +1,12 @@
+import { _ } from 'lodash';
 import { userId, password, getEditComment, userAgent } from '../../OFFAuth.js';
 
-export async function getProduct(ean) {
-    const url = `https://world.openfoodfacts.org/api/v0/product/${ean}.json`;
+function _getBaseUrl(category) {
+    return category === 'Food' ? 'https://world.openfoodfacts.org' : 'https://world.openbeautyfacts.org';
+}
+
+export async function getProduct(ean, category) {
+    const url = `${_getBaseUrl(category)}/api/v0/product/${ean}.json`;
 
     try {
         const response = await fetch(url, {
@@ -25,11 +30,13 @@ export async function getProduct(ean) {
 
 export async function uploadProductToOFF(args) {
     const comment = await getEditComment();
-    const url = `https://world.openfoodfacts.org/cgi/product_jqm2.pl?code=${args.ean}&product_name=${
+    const url = `${_getBaseUrl(args.category)}/cgi/product_jqm2.pl?code=${args.ean}&product_name=${encodeURIComponent(
         args.name
-    }&add_brands=${args.brand}&add_labels=${args.labels}&add_categories=${
-        args.categories
-    }&comment=${comment}&user_id=${userId}&password=${encodeURIComponent(password)}`;
+    )}&add_brands=${encodeURIComponent(args.brand)}&add_labels=${encodeURIComponent(
+        args.labels
+    )}&add_categories=${encodeURIComponent(args.categories)}&comment=${encodeURIComponent(
+        comment
+    )}&user_id=${userId}&password=${encodeURIComponent(password)}`;
 
     try {
         const response = await fetch(url, {
@@ -40,12 +47,20 @@ export async function uploadProductToOFF(args) {
                 UserAgent: userAgent
             }
         });
-        response.text().then(text => console.log('=> OFF response text:', text));
+        response.text().then(text => console.log('=> OFF response text:', _.truncate(text, { length: 100 })));
         if (args.wholePicture) {
-            await addPictureToProduct(args.ean, args.wholePicture, 'front', 'imgupload_front', 'front_img.jpg');
+            await _addPictureToProduct(
+                args.category,
+                args.ean,
+                args.wholePicture,
+                'front',
+                'imgupload_front',
+                'front_img.jpg'
+            );
         }
         if (args.ingredientsPicture) {
-            await addPictureToProduct(
+            await _addPictureToProduct(
+                args.category,
                 args.ean,
                 args.ingredientsPicture,
                 'ingredients',
@@ -54,7 +69,8 @@ export async function uploadProductToOFF(args) {
             );
         }
         if (args.nutritionPicture) {
-            await addPictureToProduct(
+            await _addPictureToProduct(
+                args.category,
                 args.ean,
                 args.nutritionPicture,
                 'nutrition',
@@ -67,8 +83,8 @@ export async function uploadProductToOFF(args) {
     }
 }
 
-function addPictureToProduct(code, picture, fieldValue, imgUpload, imgTitle) {
-    const url = 'https://world.openfoodfacts.org/cgi/product_image_upload.pl';
+function _addPictureToProduct(category, code, picture, fieldValue, imgUpload, imgTitle) {
+    const url = `${_getBaseUrl(category)}/cgi/product_image_upload.pl`;
 
     const formData = new FormData();
     formData.append('code', code);
