@@ -21,3 +21,8 @@ See Open Food Facts wiki:
 ## Credits
 
 - Some icons are taken from [FlatIcon](www.flaticon.com)
+
+## Third party applications
+Feel free to open a PR to add your application in this list.
+
+## Authors
