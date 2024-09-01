@@ -9,7 +9,7 @@ Join the [Open Food Facts slack](https://openfoodfacts.slack.com) if you'd like 
 
 See the collaborative pages on the Open Food Facts wiki:
 - API documentation : https://en.wiki.openfoodfacts.org/API
-- React SDK documentation : https://en.wiki.openfoodfacts.org/API/React
+- React SDK documentation : https://wiki.openfoodfacts.org/API/Javascript
 ## 👩‍⚖️ License
 - The code is release under the APACHE 2.0 license (see LICENSE file).
 
