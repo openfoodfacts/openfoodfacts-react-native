@@ -1,28 +1,23 @@
-# React native code to contribute products to Open Food Facts
+# Open Food Facts React Native SDK
+# React native code to contribute products to Open Food Facts, Open Beauty Facts, Open Pet Food Facts, Open Products Facts
 
-Example code to add to a React native mobile application to contribute products to Open Food Facts.
+- Example code to add to a React native mobile application to contribute products to Open Food Facts.
 
 Join the [Open Food Facts slack](https://openfoodfacts.slack.com) if you'd like to contribute or just reuse the code and need help.
 
-## Contributors
+## 📚 Documentation
 
-- [EthicAdvisor](https://www.ethicadvisor.org) team
-
-## Doc
-
-See Open Food Facts wiki:
-
-- https://en.wiki.openfoodfacts.org/API
-
-## License
-
+See the collaborative pages on the Open Food Facts wiki:
+- API documentation : https://en.wiki.openfoodfacts.org/API
+- React SDK documentation : https://en.wiki.openfoodfacts.org/API/React
+## 👩‍⚖️ License
 - The code is release under the APACHE 2.0 license (see LICENSE file).
 
 ## Credits
-
 - Some icons are taken from [FlatIcon](www.flaticon.com)
 
 ## Third party applications
-Feel free to open a PR to add your application in this list.
+- Feel free to open a PR to add your application in this list.
 
-## Authors
+## ✏️ Authors and Contributors
+- [EthicAdvisor](https://www.ethicadvisor.org) team
