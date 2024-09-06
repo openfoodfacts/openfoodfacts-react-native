@@ -1,0 +1,32 @@
+name: Tests run on push (Spellcheck and HTML5 validation)
+on: push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    #- name: Run spellcheck
+   #   uses: rojopolis/spellcheck-github-actions@0.28.0
+   #   with:
+        #source_files: 2019-roadmap.html advanced-user-guide.html better-food-choices-for-a-better-health-lets-mobilize.html code-of-conduct.html contact.html contacts.html contribute-to-open-food-facts-by-playing.html contribute.html data.html dev-android.html dev-artificial-intelligence.html dev-emerging.html dev-general.html dev-ios.html dev-server.html development.html discover.html donate.html eco-score-the-environmental-impact-of-food-products.html education.html experimental-nutrition-score-france.html faq.html feuille-de-route-2012.html google-impact-challenge-on-climate.html google-summer-of-code.html graphs-in-3-clicks.html help-complete-products.html help-us-fill-up-on-fiber.html how-to-add-a-product.html how-to-complete-products-on-android.html index-pro.html index.html ingredient-detector.html iphone.html keyfacts.html legal.html logo-obf.html logo.html missions-texts.html missions.html mobile-app-open-food-facts.html nova.html numbers-selected.html nutrients-list.html nutriscore-formula.html nutriscore.html nutrition-score-france.html nutrition-score-uk.html nutrition-traffic-lights.html open-food-facts-and-the-nutriscore.html open-food-facts-vision-mission-values-and-programs.html open-food-hunt-2015.html operation-sodas.html partners.html presentations.html press-and-blogs.html press-old.html press.html presskit_de_CH_selection.html presskit_de_DE_selection.html presskit_en_AU_selection.html presskit_en_UK_selection.html presskit_es_ES_selection.html presskit_fr_BE_selection.html presskit_fr_CH_selection.html presskit_fr_FR_selection.html presskit_it_CH_selection.html presskit_it_IT_selection.html presskit_nl_BE_selection.html presskit_other_languages.html presskit_pt_BR_selection.html presskit_pt_PT_selection.html presskit_selection.html presskit_vi_VI_selection.html producers.html product-preferences.html products.html rateyourvendingmachine.html scan-parties.html science.html sendinblue.html sugar.html terms-of-use.html who-we-are.html
+    #    task_name: HTML
+
+ #  validate_html:
+  #   name: Validate HTML5
+  #   runs-on: ubuntu-latest
+
+#    steps:
+  #  - uses: actions/checkout@v4
+
+   #  - name: Run HTML5 validator
+    #   uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+    #   with:
+     #    root: lang/en/texts/
