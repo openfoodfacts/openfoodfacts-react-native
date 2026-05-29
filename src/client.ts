@@ -68,6 +68,8 @@ export function createClient(options: CreateClientOptions = {}): OpenFoodFacts {
  * @param imagefield  – Which image slot to upload to
  *                       (`"front"`, `"ingredients"`, `"nutrition"`, `"packaging"`, `"other"`).
  * @param options     – Optional file name and MIME type overrides.
+ * @param fetchFn     – Optional custom `fetch` function. Defaults to
+ *                       `globalThis.fetch`.
  *
  * @example
  * ```ts
@@ -82,7 +84,7 @@ export async function uploadImageFromUri(
   barcode: string,
   imageUri: string,
   imagefield: string,
-  options?: { name?: string; type?: string },
+  options?: { name?: string; type?: string; fetch?: typeof globalThis.fetch },
 ): Promise<void> {
   const file = createImageFile(imageUri, options?.name, options?.type);
   const formData = new FormData();
@@ -91,7 +93,7 @@ export async function uploadImageFromUri(
   formData.append("imagefield", imagefield);
   appendImageToForm(formData, `imgupload_${imagefield}`, file);
 
-  const fetchFn = globalThis.fetch;
+  const fetchFn = options?.fetch ?? globalThis.fetch;
   const baseUrl = getBaseUrl(client);
 
   await fetchFn(`${baseUrl}/cgi/product_image_upload.pl`, {
