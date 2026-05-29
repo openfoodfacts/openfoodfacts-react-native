@@ -1,13 +1,16 @@
+![maintenance-status](https://img.shields.io/badge/maintenance-looking--for--maintainer-orange.svg)
+
+
 # Open Food Facts React Native code sample
 - Example code to add to a React native mobile application to contribute products to Open Food Facts, Open Beauty Facts, Open Pet Food Facts, Open Products Facts
 
 Join the [Open Food Facts slack](https://openfoodfacts.slack.com) (#javascript) if you'd like to contribute or just reuse the code and need help.
 
 ## Help needed
-- Ideally, this should be turned into a proper React Native package, based on openfoodfacts-js that Mobile apps can depend on for the shared chores all apps using Open Food Facts have to implement.
+- Ideally, this should be turned into a proper React Native package, based on [openfoodfacts-js](https://github.com/openfoodfacts/openfoodfacts-js) that Mobile apps can depend on for the shared chores all apps using Open Food Facts have to implement.
 
 ## 📚 Documentation
-- API documentation : https://openfoodfacts.github.io/openfoodfacts-server/api/
+- API documentation : https://openfoodfacts.github.io/documentation/docs/Product-Opener/api/
 - JavaScript wiki page : https://wiki.openfoodfacts.org/API/Javascript
 ## 👩‍⚖️ License
 - The code is release under the APACHE 2.0 license (see LICENSE file).
