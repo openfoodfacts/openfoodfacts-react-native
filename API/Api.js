@@ -30,22 +30,27 @@ export async function getProduct(ean, category) {
 
 export async function uploadProductToOFF(args) {
     const comment = await getEditComment();
-    const url = `${_getBaseUrl(args.category)}/cgi/product_jqm2.pl?code=${args.ean}&product_name=${encodeURIComponent(
-        args.name
-    )}&add_brands=${encodeURIComponent(args.brand)}&add_labels=${encodeURIComponent(
-        args.labels
-    )}&add_categories=${encodeURIComponent(args.categories)}&comment=${encodeURIComponent(
-        comment
-    )}&user_id=${userId}&password=${encodeURIComponent(password)}`;
+    const url = `${_getBaseUrl(args.category)}/cgi/product_jqm2.pl`;
+    const body = new URLSearchParams({
+        code: args.ean,
+        product_name: args.name,
+        add_brands: args.brand,
+        add_labels: args.labels,
+        add_categories: args.categories,
+        comment,
+        user_id: userId,
+        password
+    });
 
     try {
         const response = await fetch(url, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 UserAgent: userAgent
-            }
+            },
+            body: body.toString()
         });
         response.text().then(text => console.log('=> OFF response text:', _.truncate(text, { length: 100 })));
         if (args.wholePicture) {
