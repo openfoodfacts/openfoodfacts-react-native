@@ -5,9 +5,6 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/auto-assign-pr.yml':
         - 'toshimaru/auto-author-assign@v3.1.1'
-    '.github/workflows/codeql-analysis.yml':
-        - 'actions/checkout@v7.0.1'
-        - 'github/codeql-action@v4.39.2'
     '.github/workflows/github-projects.yml':
         - 'actions/add-to-project@main'
     '.github/workflows/label.yml':
@@ -22,11 +19,6 @@ dependencies:
         commit: 'sha1-f2c1f1fa649a891be84948ea89b5dfba1526ef05'
         owner_id: 44036562
         repo_id: 454132203
-    'actions/checkout@v7.0.1':
-        ref: 'v7.0.1'
-        commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
-        owner_id: 44036562
-        repo_id: 197814629
     'actions/labeler@v7.0.0':
         ref: 'v7.0.0'
         commit: 'sha1-bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13'
@@ -37,11 +29,6 @@ dependencies:
         commit: 'sha1-66e72920af32222769c386d81f89656ebcb6d6d5'
         owner_id: 4038316
         repo_id: 220418983
-    'github/codeql-action@v4.39.2':
-        ref: 'v4.39.2'
-        commit: 'sha1-1fc58d04a4d4374f921bdac573c3811c240f9c26'
-        owner_id: 9919
-        repo_id: 259445878
     'googleapis/release-please-action@v5.0.0':
         ref: 'v5.0.0'
         commit: 'sha1-45996ed1f6d02564a971a2fa1b5860e934307cf7'
