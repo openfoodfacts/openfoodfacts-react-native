@@ -7,7 +7,7 @@ workflows:
         - 'toshimaru/auto-author-assign@v3.1.1'
     '.github/workflows/codeql-analysis.yml':
         - 'actions/checkout@v7.0.1'
-        - 'github/codeql-action@v4.39.2'
+        - 'github/codeql-action@v4.39.4'
     '.github/workflows/github-projects.yml':
         - 'actions/add-to-project@main'
     '.github/workflows/label.yml':
@@ -37,9 +37,9 @@ dependencies:
         commit: 'sha1-66e72920af32222769c386d81f89656ebcb6d6d5'
         owner_id: 4038316
         repo_id: 220418983
-    'github/codeql-action@v4.39.2':
-        ref: 'v4.39.2'
-        commit: 'sha1-1fc58d04a4d4374f921bdac573c3811c240f9c26'
+    'github/codeql-action@v4.39.4':
+        ref: 'v4.39.4'
+        commit: 'sha1-1bd86f2fdb4b86187fa4059f16f31a3202acc9ea'
         owner_id: 9919
         repo_id: 259445878
     'googleapis/release-please-action@v5.0.0':
